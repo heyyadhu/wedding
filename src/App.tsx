@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import Intro from "./Intro";
 
 const asset = (name: string) => `/assets/${name}`;
@@ -27,6 +27,18 @@ function addToCalendar() {
 }
 
 export default function App() {
+  const [showIntro, setShowIntro] = useState(true);
+
+  useEffect(() => {
+    if (showIntro) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [showIntro]);
   useEffect(() => {
     const elements = document.querySelectorAll<HTMLElement>("[data-reveal]");
     const parallaxElements = document.querySelectorAll<HTMLElement>("[data-parallax]");
@@ -75,14 +87,15 @@ export default function App() {
     };
   }, []);
 
-  const scrollToInvitation = () => {
-    const element = document.getElementById("invitation");
-    element?.scrollIntoView({ behavior: "smooth" });
+  const handleIntroComplete = () => {
+    setShowIntro(false);
+    window.scrollTo({ top: 0, behavior: "instant" });
+    window.dispatchEvent(new Event("scroll"));
   };
 
   return (
     <>
-      <Intro onComplete={scrollToInvitation} />
+      {showIntro && <Intro onComplete={handleIntroComplete} />}
       <main id="invitation" className="invitation" aria-label="Wedding invitation for Anoop and Ambika">
       <div className="paper-texture" aria-hidden="true" />
 
