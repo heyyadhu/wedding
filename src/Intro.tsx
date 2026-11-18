@@ -26,12 +26,9 @@ export default function Intro({ onComplete }: IntroProps) {
   const [activeOrnament, setActiveOrnament] = useState<number | null>(null);
   const [animationKey, setAnimationKey] = useState(0);
   const [clickCount, setClickCount] = useState(0);
-  const [isExiting, setIsExiting] = useState(false);
   const ornamentRefs = useRef<Array<HTMLButtonElement | null>>([]);
 
   const activateOrnament = (index: number) => {
-    if (isExiting) return;
-
     setActiveOrnament(index);
     setAnimationKey((key) => key + 1);
 
@@ -40,11 +37,13 @@ export default function Intro({ onComplete }: IntroProps) {
 
     if (nextCount >= 3) {
       setTimeout(() => {
-        setIsExiting(true);
-        setTimeout(() => {
-          onComplete?.();
-        }, 700);
-      }, 400);
+        if (onComplete) {
+          onComplete();
+        } else {
+          document.getElementById("invitation")?.scrollIntoView({ behavior: "smooth" });
+        }
+      }, 450);
+      setClickCount(0);
     }
   };
 
@@ -71,7 +70,7 @@ export default function Intro({ onComplete }: IntroProps) {
 
   return (
     <header
-      className={`ornamental-canvas ${isExiting ? "is-exiting" : ""}`}
+      className="ornamental-canvas"
       onPointerDown={(event) => {
         if (event.target === event.currentTarget) setActiveOrnament(null);
       }}
