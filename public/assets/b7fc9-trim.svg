@@ -1,0 +1,53 @@
+<svg preserveAspectRatio="none" overflow="visible" style="display: block" width="17.2378" height="283.193" viewBox="0 0 17.2378 283.193" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <style>
+    #trim-line {
+      stroke-dasharray: 259.002;
+      stroke-dashoffset: 259.002;
+      animation: trim-path 1.6s cubic-bezier(0.22, 1, 0.36, 1) 0.25s forwards;
+    }
+
+    .trim-diamond {
+      opacity: 0;
+      transform-box: fill-box;
+      transform-origin: center;
+      animation: reveal-diamond 0.4s ease-out forwards;
+    }
+
+    #trim-end {
+      animation-delay: 1.75s;
+    }
+
+    @keyframes trim-path {
+      to {
+        stroke-dashoffset: 0;
+      }
+    }
+
+    @keyframes reveal-diamond {
+      from {
+        opacity: 0;
+        scale: 0.5;
+      }
+      to {
+        opacity: 1;
+        scale: 1;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      #trim-line {
+        stroke-dashoffset: 0;
+        animation: none;
+      }
+
+      .trim-diamond {
+        opacity: 1;
+        animation: none;
+      }
+    }
+  </style>
+  <g>
+    <line id="trim-line" x1="9.12835" y1="8.00196" x2="8.12663" y2="267.002" stroke="#FFCE9C"/>
+    <rect id="trim-end" class="trim-diamond" y="274.765" width="11.6501" height="11.854" transform="rotate(-44.6862 0 274.765)" fill="#FFCE9C"/>
+  </g>
+</svg>
